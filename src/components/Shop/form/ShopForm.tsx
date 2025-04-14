@@ -14,24 +14,39 @@ type ShopFormProps = {
 const ShopForm: React.FC<ShopFormProps> = ({ onSubmitData }) => {
   const { register, handleSubmit } = useForm<FormData>();
 
-  const onSubmit = async (data: FormData) => {
-    const query = encodeURIComponent(`${data.address}, Japan`);
-    const response = await fetch(`https://nominatim.openstreetmap.org/search?format=json&q=${query}`);
-    const result = await response.json();
-
-    if (result.length === 0) {
-      alert("住所が見つかりませんでした。");
-      return;
+  // Google Maps Geocoding API を使用したジオコーディング関数
+  const geocodeAddress = async (address: string) => {
+    const apiKey = process.env.REACT_APP_GOOGLE_MAPS_API_KEY; // ここに取得した API キーを入力
+    const query = encodeURIComponent(address);
+    const response = await fetch(`https://maps.googleapis.com/maps/api/geocode/json?address=${query}&key=${apiKey}`);
+    if (!response.ok) {
+      throw new Error("Geocoding API の呼び出しに失敗しました");
     }
+    const result = await response.json();
+    if (result.status !== "OK" || result.results.length === 0) {
+      throw new Error("住所が見つかりませんでした");
+    }
+    const location = result.results[0].geometry.location;
+    return {
+      latitude: location.lat,
+      longitude: location.lng,
+    };
+  };
 
-    const id = Date.now();
-    onSubmitData({
-      id,
-      name: data.name,
-      brands: data.brands.split(',').map((brand) => brand.trim()),
-      latitude: parseFloat(result[0].lat),
-      longitude: parseFloat(result[0].lon),
-    });
+  const onSubmit = async (data: FormData) => {
+    try {
+      const { latitude, longitude } = await geocodeAddress(data.address);
+      const id = Date.now();
+      onSubmitData({
+        id,
+        name: data.name,
+        brands: data.brands.split(',').map((brand) => brand.trim()),
+        latitude,
+        longitude,
+      });
+    } catch (error: any) {
+      alert(error.message);
+    }
   };
 
   return (
