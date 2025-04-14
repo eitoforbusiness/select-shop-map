@@ -1,0 +1,8 @@
+apis/ShopsApi.ts
+apis/index.ts
+index.ts
+models/NewShop.ts
+models/Shop.ts
+models/ShopLocation.ts
+models/index.ts
+runtime.ts

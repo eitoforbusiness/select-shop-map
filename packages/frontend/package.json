@@ -25,7 +25,9 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "openapi-generate": "openapi-generator-cli generate -i ../backend/openapi.yaml -g typescript-fetch -o ./src/api-client --additional-properties=supportsES6=true"
+
   },
   "eslintConfig": {
     "extends": [

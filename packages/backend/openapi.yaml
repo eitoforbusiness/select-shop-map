@@ -1,0 +1,104 @@
+openapi: 3.0.0
+info:
+  title: Select Shop Map API
+  description: API for the Select Shop Map application
+  version: 0.1.0
+  
+servers:
+  - url: /api
+    description: Default API server
+    
+paths:
+  /shops:
+    get:
+      summary: Get all shops
+      description: Returns a list of all available shops
+      operationId: getShops
+      tags:
+        - shops
+      responses:
+        '200':
+          description: A list of shops
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Shop'
+        '404':
+          description: Shops not found
+    post:
+      summary: Create a new shop
+      description: Creates a new shop entry
+      operationId: createShop
+      tags:
+        - shops
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/NewShop'
+      responses:
+        '201':
+          description: Shop created successfully
+        '400':
+          description: Invalid input
+
+components:
+  schemas:
+    Shop:
+      type: object
+      required:
+        - id
+        - name
+      properties:
+        id:
+          type: string
+          description: Unique identifier for the shop
+        name:
+          type: string
+          description: Name of the shop
+        description:
+          type: string
+          description: Description of the shop
+        location:
+          type: object
+          required:
+            - lat
+            - lng
+          properties:
+            lat:
+              type: number
+              format: double
+              description: Latitude coordinate
+            lng:
+              type: number
+              format: double
+              description: Longitude coordinate
+    
+    NewShop:
+      type: object
+      required:
+        - name
+      properties:
+        name:
+          type: string
+          description: Name of the shop
+        description:
+          type: string
+          description: Description of the shop
+        location:
+          type: object
+          required:
+            - lat
+            - lng
+          properties:
+            lat:
+              type: number
+              format: double
+              description: Latitude coordinate
+            lng:
+              type: number
+              format: double
+              description: Longitude coordinate
