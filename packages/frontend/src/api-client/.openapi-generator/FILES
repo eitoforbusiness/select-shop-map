@@ -1,7 +1,9 @@
-.openapi-generator-ignore
 apis/DefaultApi.ts
+apis/ShopApi.ts
 apis/index.ts
 index.ts
+models/AddStoreInformation.ts
+models/PostShopInformationRequest.ts
 models/UsersGet200ResponseInner.ts
 models/index.ts
 runtime.ts

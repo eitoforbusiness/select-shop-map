@@ -1,0 +1,28 @@
+title: AddStoreInformation
+x-stoplight:
+  id: d55lxhex88fb5
+type: object
+properties:
+  id:
+    type: integer
+  shop_name:
+    type: string
+    x-stoplight:
+      id: n0t1x3pfpblqc
+  address:
+    type: string
+    x-stoplight:
+      id: uxdtfv8xh26r3
+  brands:
+    type: array
+    x-stoplight:
+      id: lfjdo56wkd4i6
+    items:
+      x-stoplight:
+        id: fdwof8my7wk4o
+      type: string
+required:
+  - id
+  - shop_name
+  - address
+  - brands

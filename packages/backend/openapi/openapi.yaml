@@ -21,3 +21,20 @@ paths:
                       type: integer
                     name:
                       type: string
+  /shop-information:
+    post:
+      summary: 店舗情報保存
+      tags:
+        - Shop
+      responses:
+        '200':
+          description: OK
+      operationId: post-shop-information
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                data:
+                  $ref: ../../../Request/AddStoreInformation.yaml
